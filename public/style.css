@@ -36,14 +36,14 @@ body {
 }
 
 
-.main-page {
+#main-page {
 	height: 1000px;
 	background-color: white;
 	padding: 40px;
 }
 
 
-.chessboard {
+#chessboard {
     width: 800px;
     height: 800px;
     margin: auto;
@@ -51,6 +51,8 @@ body {
     border: 5px solid #333;
     box-shadow: 10px 10px 10px black;
 }
+
+
 .black {
     float: left;
     width: 100px;
@@ -61,6 +63,7 @@ body {
     display: table-cell;
     vertical-align:middle;
 }
+
 .white {
     float: left;
     width: 100px;
@@ -70,6 +73,18 @@ body {
     text-align:center;
     display: table-cell;
     vertical-align:middle;
+}
+
+.not-defined {
+    float: left;
+    width: 100px;
+    height: 100px;
+    background-color: #727272;  
+    font-size:80px;
+    text-align:center;
+    display: table-cell;
+    vertical-align:middle;
+
 }
 
 .fileNumber {
