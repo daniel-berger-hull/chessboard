@@ -18,18 +18,33 @@ export const KING       = 32;
 const PIECE_MASK = PAWN |  KNIGHT | BISHOP | ROOK | QUEEN | KING;
 
 
-export class ChessBoard {
+const pieceToImageMap = new Map([
+	[ BLACK_PIECE | PAWN     , "black_pawn.png" ],
+	[ BLACK_PIECE | KNIGHT   , "black_knight.png" ],
+	[ BLACK_PIECE | BISHOP   , "black_bishop.png" ],
+	[ BLACK_PIECE | ROOK     , "black_rook.png" ],
+	[ BLACK_PIECE | QUEEN    , "black_queen.png" ],
+	[ BLACK_PIECE | KING     , "black_king.png" ],
+
+	[ WHITE_PIECE | PAWN     , "white_pawn.png" ],
+	[ WHITE_PIECE | KNIGHT   , "white_bishop.png" ],
+	[ WHITE_PIECE | BISHOP   , "white_knight.png" ],
+	[ WHITE_PIECE | ROOK     , "white_rook.png" ],
+	[ WHITE_PIECE | QUEEN    , "white_queen.png" ],
+	[ WHITE_PIECE | KING     , "white_king.png" ]
+  ]);
+
+
+export class ChessBoardModel {
 
     
 
     constructor(){
 
         this.#initCells() ;
+        //this.display();
 
-        this.display();
-
-
-
+        this.testMap();
     }
 
     #initCells() {
@@ -78,11 +93,10 @@ export class ChessBoard {
             for (let j=0; j<BOARD_COLUMNS; j++) {
                 console.log(`${i},${j}  ${this.getTextDisplayForCell(i,j) }`);
             }
-
-           
         }        
     }
 
+    // Returns the text description of the piece  at a specific row and columns (i.e 'Black Bishop', 'White Pawn', etc)
     getTextDisplayForCell(row, column) {
         if (row<0 || row>BOARD_ROWS-1)           return "Invalid row/columns"
         if (column<0 || column>BOARD_COLUMNS-1)  return "Invalid row/columns"
@@ -92,28 +106,54 @@ export class ChessBoard {
         const pieceType = pieceCode & PIECE_MASK;
         let pieceDescription = "";
 
-       
-
         if (pieceType === NO_PIECE)  return ".";
 
         switch (pieceType) {
 
-              case  PAWN:     pieceDescription = "Pawn";  break;
+              case  PAWN:     pieceDescription = "Pawn";    break;
               case  KNIGHT:   pieceDescription = "Knight";  break;
               case  BISHOP:   pieceDescription = "Bishop";  break;
-              case  ROOK:     pieceDescription = "Rook";  break;
-              case  QUEEN:    pieceDescription = "Queen";  break;
-              case  KING:     pieceDescription = "King";  break;
+              case  ROOK:     pieceDescription = "Rook";    break;
+              case  QUEEN:    pieceDescription = "Queen";   break;
+              case  KING:     pieceDescription = "King";    break;
            
               default:    pieceDescription = "Undefined";  break; 
         }
 
-        
         const pieceColor = (pieceCode & BLACK_PIECE) ? "Black " : "White ";
 
-       
-
         return pieceColor + pieceDescription;
+    }
 
+
+        // The mapping is as following: 
+        //      BLACK_PIECE | PAWN     --> "black_pawn.png" 
+        //      BLACK_PIECE | KNIGHT   --> "black_knight.png" 
+        //      BLACK_PIECE | BISHOP   --> "black_bishop.png" 
+        //      BLACK_PIECE | ROOK     --> "black_rook.png" 
+        //      BLACK_PIECE | QUEEN    --> "black_queen.png"
+        //      BLACK_PIECE | KING     --> "black_king.png" 
+        
+        //      WHITE_PIECE | PAWN     --> "white_pawn.png" 
+        //      WHITE_PIECE | KNIGHT   --> "white_bishop.png" 
+        //      WHITE_PIECE | BISHOP   --> "white_knight.png" 
+        //      WHITE_PIECE | ROOK     --> "white_rook.png" 
+        //      WHITE_PIECE | QUEEN    --> "white_queen.png" 
+        //      WHITE_PIECE | KING     --> "white_king.png" 
+
+    getImageFileForValue(pieceValue){
+        return pieceToImageMap.get(pieceValue);
+    }
+
+
+
+    testMap() {
+
+        pieceToImageMap.forEach (function(value, key) {
+            console.log(`value ${value} key ${key}`);
+        })
+
+        const values = [65,66,68,72,80,96,129,130,132,136,144,160 ];
+        values.forEach( (element) => console.log(`${element}   ${pieceToImageMap.get(element)} `));
     }
 }

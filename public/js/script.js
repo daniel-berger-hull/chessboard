@@ -1,9 +1,11 @@
 
-import { ChessBoard } from './ChessBoard.js';
+import { ChessBoardModel } from './ChessBoardModel.js';
 
 let currentSelectedCell = 'A1';
 let previousSelectCell  = 'A1';
 let cellToRestore       = 'A1';
+
+let chessBoardModel = new ChessBoardModel();
 
 
 const ASCII_CODE_A = 65;
@@ -36,36 +38,41 @@ export function buildChessBoard() {
         newCell.className = 'black';
         newCell.className = getStyleForCell(cellIndex);
 
-      //newCell.onclick = highlightCell('H1');
-      //newCell.onclick = highlightCell;
+        newCell.style.backgroundImage = "url('images/black_knight.png')";         
+        newCell.style.backgroundRepeat = "no-repeat"; 
+        newCell.style.backgroundPosition = "center"; 
+        //newCell.style.backgroundSize = "cover"; 
+            
+      newCell.onclick = highlightCell;
       
-
-      
-      // const textnode = document.createTextNode(newCell);
-      //newCell.appendChild(textnode);
-
-      chessBoard.appendChild(newCell);
-
-      //const oldColor = getBackgroundColorForCell(previousSelectCell);
-
-
+       chessBoard.appendChild(newCell);
     }
   }
 
 
-  const chessBoardModel = new ChessBoard();
- 
+}
 
+function displayPieces() {
+
+  // To Do make sure to leverage the pieceToImageMap object from the CheckBoardModel, to find the image file for each type of piece on the board
+  //  1 - CheckBoardModel --> Give the int value of each cell on the board
+  //     2-  CheckBoardModel::pieceToImageMap --> Will give the image file name for each int value of a piece
+  //        3 - script.js :: displayPieces   --> Will set the backgroud image with image file found in step 2
+  
+  //chessBoardModel
 
 }
 
-export function highlightCell (cellName) {
+export function highlightCell (cellObject) {
 
+    if (cellObject === null || cellObject.currentTarget === null)  return;
 
-    console.log(`highlightCell called with ${cellName}`)
-    if ( !isValidCell(cellName) ){
+    const cellID = cellObject.currentTarget.id;
+
+    console.log(`highlightCell called with ${cellID}`);
+    if ( !isValidCell(cellID) ){
         
-         console.log(cellName + ' appears to be an invalid cell name..');
+         console.log(cellID + ' appears to be an invalid cell name..');
          return;
     }
 
@@ -77,13 +84,13 @@ export function highlightCell (cellName) {
     // So current selected will  be red  --> The cell previously selected will switch from red to blue --> And this one before that will switch from blue to its normal color (Either black/white  or Green/beige etc)
     cellToRestore  = previousSelectCell;
     previousSelectCell = currentSelectedCell;
-    currentSelectedCell = cellName;  
+    currentSelectedCell = cellID;  
 
+    // Apply the respective colors to the appropriate cell (i.e Current selction is red, previous is blue, and restore the initial cell to its orginial color[white or black])
     document.getElementById(cellToRestore).style.backgroundColor = oldColor;
     document.getElementById(previousSelectCell).style.backgroundColor = "blue";
     document.getElementById(currentSelectedCell).style.backgroundColor = "red";
-    
-    // console.log(cellName);
+  
 }
 
 function isValidCell  (cellName) {
@@ -131,17 +138,7 @@ function getStyleForCell  (cellName) {
  
 
 window.onload = function() {
-
   buildChessBoard();
 }
 
 
-// const main = () => {
-
-//     const cellNames = ["A1", "A2", "A3","A4", "B1" ,"B2", "B3", "B4" ,"B5" , "D1", "D2" , "D4"];
-
-//     cellNames.forEach( (cell) => {  console.log(cell + "  " +  getStyleForCell(cell))  });
-    
-// }
-
-// main();
