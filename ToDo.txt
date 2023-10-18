@@ -1,0 +1,2 @@
+Oct 13:
+   Did impreove the ChessBoardModel class, and it give a piece for each cell, and also can give the image file
