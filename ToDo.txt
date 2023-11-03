@@ -1,2 +1,5 @@
 Oct 13:
-   Did impreove the ChessBoardModel class, and it give a piece for each cell, and also can give the image file
+   Did improve the ChessBoardModel class, and it give a piece for each cell, and also can give the image file
+
+Nov 3:
+   Will need to add the Graph work and findings from the js-graph-analysis project (i.e start to have potential moves)
